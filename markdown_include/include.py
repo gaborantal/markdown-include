@@ -63,9 +63,7 @@ class MarkdownInclude(Extension):
                 "(default), a warning will be printed and "
                 "Markdown will continue parsing the file.",
             ],
-            'extensions': [
-                {}, 'Sets the allowed extensions to syntax highlight'
-            ],
+            "extensions": [{}, "Sets the allowed extensions to syntax highlight"],
         }
         for key, value in configs.items():
             self.setConfig(key, value)
@@ -93,9 +91,11 @@ class IncludePreprocessor(Preprocessor):
         self.inheritHeadingDepth = config["inheritHeadingDepth"]
         self.headingOffset = config["headingOffset"]
         self.throwException = config["throwException"]
-        self.extensions = config['extensions']
+        self.extensions = config["extensions"]
         if not isinstance(self.extensions, dict):
-            print("The given 'extensions' config is not a dictionary. Inserting source code files is disabled.")
+            print(
+                "The given 'extensions' config is not a dictionary. Inserting source code files is disabled."
+            )
             self.extensions = dict()
 
     def run(self, lines):
@@ -183,7 +183,11 @@ class IncludePreprocessor(Preprocessor):
                     # if source code is included
                     source_ext = os.path.splitext(filename)[1][1:]
                     if source_ext in self.extensions:
-                        text = ['\n```' + self.extensions[source_ext] + '\n', *text, '\n```\n']
+                        text = [
+                            "\n```" + self.extensions[source_ext] + "\n",
+                            *text,
+                            "\n```\n",
+                        ]
 
                     text_to_insert = "\r\n".join(text)
 
